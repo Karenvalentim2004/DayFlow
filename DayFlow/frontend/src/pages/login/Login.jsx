@@ -101,7 +101,7 @@ const Login = () => {
         </form>
       </div>
 
-      {/* REGISTER */}
+      
       <div className="form-box register">
         <form>
           <h1>Cadastre-se</h1>
@@ -117,7 +117,6 @@ const Login = () => {
           <button type="submit" className="btn">Cadastre-se</button>
           <p>ou cadastre-se com o Google:</p>
           <div className="social-icons">
-            {/* Renderiza apenas se estiver ativo para evitar bugs de Iframe invisível */}
             {isActive && (
               <GoogleLogin
                 onSuccess={responseGoogle}
@@ -128,7 +127,7 @@ const Login = () => {
         </form>
       </div>
 
-      {/* TOGGLE BOX */}
+      
       <div className="toggle-box">
         <div className="toggle-panel toggle-left">
           <h1>Olá, Bem-Vindo!</h1>
