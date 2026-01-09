@@ -1,0 +1,31 @@
+.tasks-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.tasks-header h1 {
+  margin: 0;
+}
+
+.view-buttons button {
+  background: transparent;
+  border: 1px solid var(--primary);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-left: 8px;
+  color: var(--primary);
+}
+
+.view-buttons button.active {
+  background: var(--primary);
+  color: white;
+}

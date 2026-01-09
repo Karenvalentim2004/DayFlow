@@ -1,0 +1,15 @@
+.calendar-container {
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-task {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.calendar-task:last-child {
+  border-bottom: none;
+}
