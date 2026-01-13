@@ -1,0 +1,138 @@
+.financeiro-layout {
+    display: flex;
+}
+
+.financeiro-content {
+    margin-left: 90px;
+    /* largura da navbar */
+    width: calc(100% - 90px);
+}
+
+.financeiro-main {
+    min-height: calc(100vh - 80px);
+    padding: 24px;
+    background: #f5f9ff;
+}
+
+.financeiro-header {
+    width: 100vw;
+    margin-left: -90px;
+    background: linear-gradient(90deg, #4F46E5, #4F46E5);
+    color: white;
+    padding: 23px 24px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.financeiro-filtro {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.financeiro-filtro select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.financeiro-resumo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.box {
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.blue {
+    background: #e3f2fd;
+}
+
+.green {
+    background: #e8f5e9;
+}
+
+.red {
+    background: #ffebee;
+}
+
+.financeiro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 24px;
+}
+
+.financeiro-chart,
+.financeiro-table {
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+thead {
+    background: #e3f2fd;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    padding: 16px;
+}
+
+.financeiro-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.financeiro-form input,
+.financeiro-form select,
+.financeiro-form button {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.financeiro-form button {
+    background: #1e88e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1024px) {
+    .financeiro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .financeiro-resumo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
