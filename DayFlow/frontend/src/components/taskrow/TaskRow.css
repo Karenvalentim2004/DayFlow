@@ -1,0 +1,25 @@
+.task-row {
+  background: #0f1320;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.status.Em-andamento {
+  background: #f7c948;
+  color: #000;
+}
+
+.status.Pendente {
+  background: #e5533d;
+}
+
+.person {
+  opacity: 0.8;
+}

@@ -1,31 +1,19 @@
-.tasks-page {
-  padding: 24px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.tasks-header {
+.dayflow-layout {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  height: 100vh;
+  background: #0f1320;
+  color: #fff;
 }
 
-.tasks-header h1 {
-  margin: 0;
+.dayflow-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
 }
 
-.view-buttons button {
-  background: transparent;
-  border: 1px solid var(--primary);
-  padding: 8px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-  margin-left: 8px;
-  color: var(--primary);
-}
-
-.view-buttons button.active {
-  background: var(--primary);
-  color: white;
+.board {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

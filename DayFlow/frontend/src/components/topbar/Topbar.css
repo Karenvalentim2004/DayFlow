@@ -1,0 +1,31 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.tabs button {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.tabs .active {
+  color: #fff;
+  border-bottom: 2px solid #5f9cff;
+}
+
+.new-task {
+  background: #5f9cff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}

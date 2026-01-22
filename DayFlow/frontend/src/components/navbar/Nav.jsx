@@ -77,6 +77,7 @@ const Nav = () => {
                 <span className="text nav-text">Financeiro</span>
               </Link>
             </li>
+
           </ul>
         </div>
 

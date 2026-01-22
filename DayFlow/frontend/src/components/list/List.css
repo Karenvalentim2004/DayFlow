@@ -1,0 +1,29 @@
+.reminder-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.reminder-card {
+  width: 100%;
+}
+
+
+
+@media (max-width: 1200px) {
+  .reminder-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .reminder-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .reminder-list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,33 @@
+.reminder-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.reminder-form input {
+  background: #0f1320;
+  border: 1px solid #2a2f4a;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.reminder-form input:focus {
+  outline: none;
+  border-color: #5f9cff;
+}
+
+.reminder-form button {
+  background: #5f9cff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reminder-form button:hover {
+  opacity: 0.9;
+}

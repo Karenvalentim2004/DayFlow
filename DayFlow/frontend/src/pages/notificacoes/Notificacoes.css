@@ -1,0 +1,69 @@
+.notifications-page {
+  display: flex;
+}
+
+.notifications-content {
+  flex: 1;
+  padding: 32px;
+}
+
+.notifications-header {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+
+.btn-outline-blue {
+  background-color: transparent;
+  color:#4F46E5;            
+  border: 2px solid #4F46E5;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-blue:hover {
+  background-color: #4F46E5;
+  color: #ffffff;
+}
+
+.btn-outline-blue:active {
+  transform: scale(0.97);
+}
+
+.btn-outline-blue:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
+}
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reminder-card {
+  width: 480px;
+  background: linear-gradient(135deg, #d9ecff, #b8d9ff);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.reminder-card input,
+.reminder-card textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 12px;
+}

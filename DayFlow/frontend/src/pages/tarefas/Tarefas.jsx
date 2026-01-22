@@ -3,51 +3,42 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 import Nav from "../../components/navbar/Nav";
-
-import TaskBoard from "../../components/card/TashBoard";
-import TaskCalendar from "../../components/calendario/TaskCalendar";
-import TaskForm from "../../components/tarefas/TaskForm";
+import Topbar from "../../components/topbar/Topbar";
+import TaskGroup from "../../components/taskgroup/TaskGroup";
 
 import "./Tarefas.css";
 
 const Tarefas = () => {
-  const [tasks, setTasks] = useState([]);
   const [view, setView] = useState("board");
 
-  const addTask = (task) => {
-    setTasks((prev) => [...prev, task]);
-  };
-
   return (
-    <div className="tasks-page">
+    <div className="dayflow-layout">
       <Nav />
 
-      <div className="tasks-header">
-        <h1>Minhas Tarefas</h1>
+      <main className="dayflow-main">
+        <Topbar view={view} setView={setView} />
 
-        <div className="view-buttons">
-          <button
-            className={view === "board" ? "active" : ""}
-            onClick={() => setView("board")}
-          >
-            Quadro
-          </button>
+        {view === "board" && (
+          <div className="board">
+            <TaskGroup title="Datas passadas" />
+            <TaskGroup title="Hoje" />
+            <TaskGroup title="Esta semana" />
+            <TaskGroup title="Semana que vem" />
+            <TaskGroup title="Mais tarde" />
+            <TaskGroup title="Sem data" />
+          </div>
+        )}
 
-          <button
-            className={view === "calendar" ? "active" : ""}
-            onClick={() => setView("calendar")}
-          >
-            Calendário
-          </button>
-        </div>
-      </div>
-
-      <TaskForm addTask={addTask} />
-
-      {view === "board" && <TaskBoard tasks={tasks} />}
-      {view === "calendar" && <TaskCalendar tasks={tasks} />}
+        {view === "calendar" && (
+          <div className="calendar-placeholder">
+            Calendário (em construção)
+          </div>
+        )}
+      </main>
     </div>
   );
-};
+}
 
 export default Tarefas;
+
+
