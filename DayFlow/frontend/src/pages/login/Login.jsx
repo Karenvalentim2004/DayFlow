@@ -101,7 +101,7 @@ const Login = () => {
         </form>
       </div>
 
-      
+
       <div className="form-box register">
         <form>
           <h1>Cadastre-se</h1>
@@ -113,6 +113,16 @@ const Login = () => {
           </div>
           <div className="input-box">
             <input type="password" placeholder="Senha" required />
+          </div>
+          <div className="input-box">
+            <label>Escolha seu perfil</label>
+            <select required>
+              <option value="">Selecione...</option>
+              <option value="recepcionista">Recepcionista</option>
+              <option value="enfermeiro">Enfermeiro</option>
+              <option value="medico">Médico</option>
+              <option value="paciente">Paciente</option>
+            </select>
           </div>
           <button type="submit" className="btn">Cadastre-se</button>
           <p>ou cadastre-se com o Google:</p>
@@ -127,7 +137,7 @@ const Login = () => {
         </form>
       </div>
 
-      
+
       <div className="toggle-box">
         <div className="toggle-panel toggle-left">
           <h1>Olá, Bem-Vindo!</h1>

@@ -22,8 +22,8 @@ const Nav = () => {
           </span>
 
           <div className="text header-text">
-            <span className="name">DayFlow</span>
-            <span className="profession">Organize seu dia</span>
+            <span className="name">SIGPS</span>
+            <span className="titulo">Gerenciamento para Posto de Saude</span>
           </div>
         </div>
 

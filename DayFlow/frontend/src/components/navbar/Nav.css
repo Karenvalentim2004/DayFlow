@@ -105,7 +105,7 @@ body {
 }
 
 .sidebar .image-text img {
-    width: 40px;
+    width: 75px;
     border-radius: 6px;
 }
 
@@ -125,8 +125,9 @@ header .image-text .header-text {
     font-size: 600;
 }
 
-.header-text .profession {
+.header-text .titulo {
     margin-top: -2px;
+    font-size: 15px;
 }
 
 .sidebar header .toggle {
