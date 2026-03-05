@@ -79,6 +79,15 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="input-box">
+            <select required>
+              <option value="">Selecione...</option>
+              <option value="recepcionista">Recepcionista</option>
+              <option value="enfermeiro">Enfermeiro</option>
+              <option value="medico">Médico</option>
+              <option value="paciente">Paciente</option>
+            </select>
+          </div>
           {error && <p className="error" style={{ color: "red" }}>{error}</p>}
           <button type="submit" className="btn" disabled={loading}>
             {loading ? "Entrando..." : "Login"}
@@ -115,7 +124,6 @@ const Login = () => {
             <input type="password" placeholder="Senha" required />
           </div>
           <div className="input-box">
-            <label>Escolha seu perfil</label>
             <select required>
               <option value="">Selecione...</option>
               <option value="recepcionista">Recepcionista</option>
@@ -125,29 +133,21 @@ const Login = () => {
             </select>
           </div>
           <button type="submit" className="btn">Cadastre-se</button>
-          <p>ou cadastre-se com o Google:</p>
-          <div className="social-icons">
-            {isActive && (
-              <GoogleLogin
-                onSuccess={responseGoogle}
-                onError={() => console.log("Erro ao logar com Google")}
-              />
-            )}
-          </div>
         </form>
       </div>
 
 
       <div className="toggle-box">
         <div className="toggle-panel toggle-left">
-          <h1>Olá, Bem-Vindo!</h1>
+          <h1>Olá, Bem-Vindo </h1>
+          <h1> de volta!</h1>
           <p>Ainda não tem uma conta?</p>
           <button className="btn" onClick={() => setIsActive(true)}>
             Cadastre-se
           </button>
         </div>
         <div className="toggle-panel toggle-right">
-          <h1>Bem-Vindo de volta!</h1>
+          <h1>Bem-Vindo!</h1>
           <p>Já tem uma conta?</p>
           <button className="btn" onClick={() => setIsActive(false)}>
             Login

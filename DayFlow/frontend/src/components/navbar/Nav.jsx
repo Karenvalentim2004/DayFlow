@@ -53,14 +53,14 @@ const Nav = () => {
             <li className="nav-link">
               <Link to="/tarefas">
                 <i className="bx bx-calendar icon" />
-                <span className="text nav-text">Minhas Tarefas</span>
+                <span className="text nav-text">Minhas Consultas</span>
               </Link>
             </li>
 
             <li className="nav-link">
               <Link to="/evolucao">
-                <i className="bx bx-bar-chart-alt icon" />
-                <span className="text nav-text">Evolução</span>
+                <i className="bx bx-clipboard-detail icon" />
+                <span className="text nav-text">Prontuarios</span>
               </Link>
             </li>
 
@@ -68,13 +68,6 @@ const Nav = () => {
               <Link to="/notificacoes">
                 <i className="bx bx-bell icon" />
                 <span className="text nav-text">Notificações</span>
-              </Link>
-            </li>
-
-            <li className="nav-link">
-              <Link to="/financeiro">
-                <i className="bx bx-wallet icon" />
-                <span className="text nav-text">Financeiro</span>
               </Link>
             </li>
 
