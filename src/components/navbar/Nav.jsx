@@ -59,7 +59,7 @@ const Nav = () => {
 
             <li className="nav-link">
               <Link to="/evolucao">
-                <i className="bx bx-clipboard-detail icon" />
+                <i className="bx bx-file icon" />
                 <span className="text nav-text">Prontuarios</span>
               </Link>
             </li>
