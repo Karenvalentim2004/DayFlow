@@ -4,7 +4,7 @@ import Nav from "../../components/navbar/Nav";
 import Form from "../../components/form/Form";
 import List from "../../components/list/List";
 
-import "./Notificacoes.css";
+import "./Pacientes.css";
 
 export default function Notificacoes() {
   const [reminders, setReminders] = useState([]);
