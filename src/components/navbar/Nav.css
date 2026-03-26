@@ -223,3 +223,22 @@ header .image-text .header-text {
 .body.dark .switch::before {
     left: 25px;
 }
+
+.user-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--bg-light);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.user-info span {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.user-info small {
+    color: var(--text-secondary);
+    font-size: 12px;
+}

@@ -23,8 +23,14 @@ const Nav = () => {
 
           <div className="text header-text">
             <span className="name">SIGPS</span>
-            <span className="titulo">Gerenciamento para Posto de Saude</span>
+            <span className="titulo">Posto de Saúde</span>
           </div>
+        </div>
+
+        {/* Usuário logado */}
+        <div className="user-info">
+          <span>{user?.nome}</span>
+          <small>{user?.identificar}</small>
         </div>
 
         <i
@@ -43,33 +49,54 @@ const Nav = () => {
           </li>
 
           <ul className="menu-links">
+
+            {/* DASHBOARD - todos */}
             <li className="nav-link">
               <Link to="/dashboard">
                 <i className="bx bx-home-alt icon" />
-                <span className="text nav-text">Home</span>
+                <span className="text nav-text">Dashboard</span>
               </Link>
             </li>
 
-            <li className="nav-link">
-              <Link to="/tarefas">
-                <i className="bx bx-calendar icon" />
-                <span className="text nav-text">Minhas Consultas</span>
-              </Link>
-            </li>
+            {/* PACIENTES - recepcionista */}
+            {user?.identificar === "recepcionista" && (
+              <li className="nav-link">
+                <Link to="/pacientes">
+                  <i className="bx bx-user icon" />
+                  <span className="text nav-text">Pacientes</span>
+                </Link>
+              </li>
+            )}
 
-            <li className="nav-link">
-              <Link to="/evolucao">
-                <i className="bx bx-file icon" />
-                <span className="text nav-text">Prontuarios</span>
-              </Link>
-            </li>
+            {/* AGENDAMENTOS - recepcionista e paciente */}
+            {(user?.identificar === "recepcionista" || user?.identificar === "paciente") && (
+              <li className="nav-link">
+                <Link to="/agendamentos">
+                  <i className="bx bx-calendar icon" />
+                  <span className="text nav-text">Agendamentos</span>
+                </Link>
+              </li>
+            )}
 
-            <li className="nav-link">
-              <Link to="/notificacoes">
-                <i className="bx bx-bell icon" />
-                <span className="text nav-text">Notificações</span>
-              </Link>
-            </li>
+            {/* PRONTUÁRIOS - médico */}
+            {user?.identificar === "medico" && (
+              <li className="nav-link">
+                <Link to="/prontuarios">
+                  <i className="bx bx-file icon" />
+                  <span className="text nav-text">Prontuários</span>
+                </Link>
+              </li>
+            )}
+
+            {/* RELATÓRIOS - profissionais */}
+            {user?.identificar !== "paciente" && (
+              <li className="nav-link">
+                <Link to="/relatorios">
+                  <i className="bx bx-bar-chart icon" />
+                  <span className="text nav-text">Relatórios</span>
+                </Link>
+              </li>
+            )}
 
           </ul>
         </div>
@@ -84,7 +111,6 @@ const Nav = () => {
         </div>
       </div>
     </nav>
-
   );
 };
 
