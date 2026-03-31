@@ -15,6 +15,7 @@ const Nav = () => {
 
   return (
     <nav className={`sidebar ${isClosed ? "close" : ""}`}>
+      
       <header>
         <div className="image-text">
           <span className="image">

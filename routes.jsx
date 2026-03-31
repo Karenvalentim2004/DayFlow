@@ -4,6 +4,7 @@ import { AuthContext } from "./src/contexts/AuthContext";
 
 import Login from "./src/pages/login/Login";
 import Dashboard from "./src/pages/dashboard/Dashboard";
+import Pacientes from "./src/pages/pacientes/Pacientes";
 
 // Rota protegida
 const PrivateRoute = ({ children }) => {
@@ -29,7 +30,16 @@ function AppRoutes() {
           }
         />
 
-        
+        {/* Pacientes */}
+        <Route
+          path="/pacientes"
+          element={
+            <PrivateRoute>
+              <Pacientes />
+            </PrivateRoute>
+          }
+        />
+
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

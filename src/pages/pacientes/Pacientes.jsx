@@ -1,48 +1,65 @@
 import { useEffect, useState } from "react";
 
+import api from "../../services/api";
 import Nav from "../../components/navbar/Nav";
-import Form from "../../components/form/Form";
-import List from "../../components/list/List";
-
 import "./Pacientes.css";
 
-export default function Notificacoes() {
-  const [reminders, setReminders] = useState([]);
-  const [open, setOpen] = useState(false);
+const Pacientes = () => {
+  const [pacientes, setPacientes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if ("Notification" in window) {
-      Notification.requestPermission();
-    }
+    fetchPacientes();
   }, []);
 
-  return (
-    <div className="notifications-page">
+  const fetchPacientes = async () => {
+    try {
+      const response = await api.get("/pacientes");
 
+      setPacientes(response.data);
+    } catch (error) {
+      console.log("Erro ao buscar pacientes:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="layout">
       <Nav />
 
-      <main className="notifications-content">
-        <header className="notifications-header">
-          <h1>Notificações</h1>
+      <div className="content">
+        <h1>Pacientes</h1>
 
-          <button
-            type="button"
-            className="btn-outline-blue"
-            onClick={() => setOpen(true)}
-          >
-            Criar Novo Lembrete
-          </button>
-        </header>
+        {loading ? (
+          <p>Carregando...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
 
-        <List reminders={reminders} />
-      </main>
-
-      {open && (
-        <Form
-          setReminders={setReminders}
-          onClose={() => setOpen(false)}
-        />
-      )}
+            <tbody>
+              {pacientes.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.nome}</td>
+                  <td>{p.email}</td>
+                  <td>
+                    <button className="edit">Editar</button>
+                    <button className="delete">Excluir</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
-}
+};
+
+export default Pacientes;
