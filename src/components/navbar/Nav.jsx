@@ -13,9 +13,28 @@ const Nav = () => {
     navigate("/");
   };
 
+  const getInitials = (nome) => {
+    if (!nome) return "";
+    return nome
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
+
+  const getRoleShort = (role) => {
+    const roles = {
+      medico: "MED",
+      paciente: "PAC",
+      recepcionista: "RECEP",
+      enfermeiro: "ENF",
+    };
+    return roles[role] || "";
+  };
+
   return (
     <nav className={`sidebar ${isClosed ? "close" : ""}`}>
-      
+
       <header>
         <div className="image-text">
           <span className="image">
@@ -30,8 +49,22 @@ const Nav = () => {
 
         {/* Usuário logado */}
         <div className="user-info">
-          <span>{user?.nome}</span>
-          <small>{user?.identificar}</small>
+          <div className="avatar">
+            {getInitials(user?.nome)}
+          </div>
+
+          {!isClosed && (
+            <>
+              <span className="full-name">{user?.nome}</span>
+              <small className="role">{user?.identificar}</small>
+            </>
+          )}
+
+          {isClosed && (
+            <small className="role-short">
+              {getRoleShort(user?.identificar)}
+            </small>
+          )}
         </div>
 
         <i
@@ -110,6 +143,7 @@ const Nav = () => {
             </div>
           </li>
         </div>
+
       </div>
     </nav>
   );
