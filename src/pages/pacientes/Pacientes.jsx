@@ -18,7 +18,11 @@ const Pacientes = () => {
 
   const [form, setForm] = useState({
     nome: "",
-    email: ""
+    email: "",
+    cpf: "",
+    data_nascimento: "",
+    endereco: "",
+    telefone: ""
   });
 
   useEffect(() => {
@@ -41,13 +45,15 @@ const Pacientes = () => {
 
     if (paciente) {
       setForm({
-        nome: paciente.nome,
-        email: paciente.email,
-        endereco: paciente.endereco,
-        telefone: paciente.telefone
+        nome: paciente.nome || "",
+        email: paciente.email || "",
+        cpf: paciente.cpf || "",
+        data_nascimento: paciente.data_nascimento || "",
+        endereco: paciente.endereco || "",
+        telefone: paciente.telefone || ""
       });
     } else {
-      setForm({ nome: "", email: "", endereco: "", telefone: "" });
+      setForm({ nome: "", email: "", endereco: "", telefone: "", cpf: "", data_nascimento: "" });
     }
 
     setModalOpen(true);
@@ -87,6 +93,23 @@ const Pacientes = () => {
     }
   };
 
+  const formatarData = (data) => {
+    if (!data) return "";
+
+    const [ano, mes, dia] = data.split("T")[0].split("-");
+
+    return `${dia}/${mes}/${ano}`;
+
+  };
+
+  const [busca, setBusca] = useState("");
+
+  const pacientesFiltrados = pacientes.filter((p) =>
+    p.nome.toLowerCase().includes(busca.toLowerCase()) ||
+    p.email?.toLowerCase().includes(busca.toLowerCase()) ||
+    p.cpf?.includes(busca)
+  );
+
   return (
     <div className="layout">
       <Nav />
@@ -94,9 +117,20 @@ const Pacientes = () => {
       <div className="content">
         <div className="header">
           <h1>Pacientes</h1>
-          <button className="btn-primary" onClick={() => abrirModal()}>
-            + Novo Paciente
-          </button>
+
+          <div className="header-actions">
+            <input
+              type="text"
+              placeholder="Pesquisar paciente..."
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              className="input-search"
+            />
+
+            <button className="btn-primary" onClick={() => abrirModal()}>
+              + Novo Paciente
+            </button>
+          </div>
         </div>
 
         {loading ? (
@@ -116,12 +150,12 @@ const Pacientes = () => {
             </thead>
 
             <tbody>
-              {pacientes.map((p) => (
+              {pacientesFiltrados.map((p) => (
                 <tr key={p.id}>
                   <td>{p.nome}</td>
                   <td>{p.email}</td>
                   <td>{p.cpf}</td>
-                  <td>{p.data_nascimento}</td>
+                  <td>{formatarData(p.data_nascimento)}</td>
                   <td>{p.endereco}</td>
                   <td>{p.telefone}</td>
                   <td>
@@ -159,7 +193,6 @@ const Pacientes = () => {
                   placeholder="Email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  required
                 />
 
                 <input
@@ -191,7 +224,7 @@ const Pacientes = () => {
                 />
 
                 <div className="modal-actions">
-                  <button type="button" onClick={fecharModal}>
+                  <button type="button" className="btn-cancel" onClick={fecharModal}>
                     Cancelar
                   </button>
 

@@ -1,5 +1,5 @@
 .content {
-    margin-left: 250px;
+    margin-left: 180px;
     padding: 30px;
 }
 
@@ -9,6 +9,18 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.input-search {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 220px;
 }
 
 /* BOTÕES */
@@ -21,8 +33,17 @@
     cursor: pointer;
 }
 
+.btn-cancel{
+    border: none;
+    background: #9ca3af;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 .btn-edit {
-    background: #22c55e;
+    background: #163b23;
     color: white;
     border: none;
     padding: 6px 10px;
@@ -32,7 +53,7 @@
 }
 
 .btn-delete {
-    background: #ef4444;
+    background: #5f1a1a;
     color: white;
     border: none;
     padding: 6px 10px;
