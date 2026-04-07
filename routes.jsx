@@ -6,6 +6,8 @@ import Login from "./src/pages/login/Login";
 import Dashboard from "./src/pages/dashboard/Dashboard";
 import Pacientes from "./src/pages/pacientes/Pacientes";
 import Agendamentos from "./src/pages/agendamentos/Agendamentos";
+// import Prontuarios from "./src/pages/prontuarios/Prontuarios";
+import Relatorios from "./src/pages/relatorios/Relatorios";
 
 // Rota protegida
 const PrivateRoute = ({ children }) => {
@@ -47,6 +49,26 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <Agendamentos />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Relatórios */}
+        {/* <Route
+          path="/prontuarios"
+          element={
+            <PrivateRoute>
+              <Prontuarios />
+            </PrivateRoute>
+          }
+        /> */}
+
+        {/* Relatórios */}
+        <Route
+          path="/relatorios"
+          element={
+            <PrivateRoute>
+              <Relatorios />
             </PrivateRoute>
           }
         />

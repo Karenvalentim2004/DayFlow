@@ -1,0 +1,62 @@
+.relatorios {
+  padding: 20px;
+}
+
+/* RESUMO */
+.resumo {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.box {
+  padding: 15px;
+  background: #1e1e2f;
+  color: white;
+  border-radius: 10px;
+}
+
+.green { background: #27ae60; }
+.red { background: #e74c3c; }
+.blue { background: #3498db; }
+
+/* FILTROS */
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filtros input,
+.filtros select {
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.filtros button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* TABELA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.agendado { color: green; }
+.cancelado { color: red; }
+.concluido { color: blue; }
