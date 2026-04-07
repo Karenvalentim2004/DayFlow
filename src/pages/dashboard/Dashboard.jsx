@@ -45,7 +45,7 @@ const Dashboard = () => {
       });
 
     } catch (err) {
-      console.log("Erro dashboard:", err);
+      console.log("Erro dashboard:", err.response?.data);
     } finally {
       setLoading(false);
     }

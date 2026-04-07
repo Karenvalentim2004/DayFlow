@@ -32,6 +32,8 @@ const Agendamentos = () => {
   const [pacientes, setPacientes] = useState([]);
   const [medicos, setMedicos] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [editingEvent, setEditingEvent] = useState(null);
@@ -41,45 +43,70 @@ const Agendamentos = () => {
 
   const [form, setForm] = useState({
     paciente_id: "",
-    medico_id: "",
+    profissional_id: "",
     status: "agendado"
   });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+ useEffect(() => {
+  let mounted = true;
 
+  const load = async () => {
+    if (!mounted) return;
+    await fetchData();
+  };
+
+  load();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
+
+  // 🔥 BUSCAR DADOS
   const fetchData = async () => {
     try {
-      const ag = await getAgendamentos();
-      const pac = await getPacientes();
+      setLoading(true);
 
-      const med = await fetch("http://localhost:3000/api/usuarios?tipo=medico")
-        .then(res => res.json());
+      const [ag, pac, medRes] = await Promise.all([
+        getAgendamentos(),
+        getPacientes(),
+        fetch("http://localhost:3000/api/usuarios?tipo=medico")
+      ]);
 
-      const formatted = ag.map((a) => ({
-        id: a.id,
-        title: `${a.paciente_nome} - ${a.medico_nome}`,
-        start: new Date(a.data),
-        end: new Date(new Date(a.data).getTime() + 30 * 60000),
-        status: a.status,
-        paciente_id: a.paciente_id,
-        medico_id: a.medico_id
-      }));
+      if (!medRes.ok) throw new Error("Erro ao buscar médicos");
+
+      const med = await medRes.json();
+
+      const formatted = ag.map((a) => {
+        const startDate = new Date(`${a.data}T${a.hora}`);
+
+        return {
+          id: a.id,
+          title: `${a.paciente_nome} - ${a.profissional_nome}`,
+          start: startDate,
+          end: new Date(startDate.getTime() + 30 * 60000),
+          status: a.status,
+          paciente_id: a.paciente_id,
+          profissional_id: a.profissional_id
+        };
+      });
 
       setEvents(formatted);
       setPacientes(pac);
       setMedicos(med);
 
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Erro ao carregar dados");
+    } finally {
+      setLoading(false);
     }
   };
 
   // 🔍 FILTROS
   const filteredEvents = events.filter((e) => {
     const matchPaciente = filtroPaciente
-      ? e.paciente_id == filtroPaciente
+      ? e.paciente_id === Number(filtroPaciente)
       : true;
 
     const matchData = filtroData
@@ -89,24 +116,54 @@ const Agendamentos = () => {
     return matchPaciente && matchData;
   });
 
-  // 🧠 BLOQUEIO POR MÉDICO
-  const isSlotOccupied = (start, medico_id) => {
+  // 🚫 BLOQUEIO
+  const isSlotOccupied = (start, profissional_id) => {
     return events.some(
       (e) =>
-        e.medico_id == medico_id &&
+        e.profissional_id === Number(profissional_id) &&
         new Date(e.start).getTime() === new Date(start).getTime()
     );
   };
 
+  // 🧲 DRAG & DROP
+  const moveEvent = async ({ event, start }) => {
+    if (isSlotOccupied(start, event.profissional_id)) {
+      toast.warning("Horário ocupado");
+      return;
+    }
+
+    const data = moment(start).format("YYYY-MM-DD");
+    const hora = moment(start).format("HH:mm:ss");
+
+    try {
+      await updateAgendamento(event.id, {
+        paciente_id: event.paciente_id,
+        profissional_id: event.profissional_id,
+        data,
+        hora,
+        status: event.status
+      });
+
+      toast.success("Reagendado!");
+      fetchData();
+
+    } catch (err) {
+      console.error(err);
+      toast.error("Erro ao reagendar");
+    }
+  };
+
   // 📅 NOVO AGENDAMENTO
-  const handleSelectSlot = ({ start }) => {
+  const abrirNovoAgendamento = () => {
     setEditingEvent(null);
-    setSelectedDate(start);
+    setSelectedDate(new Date());
+
     setForm({
       paciente_id: "",
-      medico_id: "",
+      profissional_id: "",
       status: "agendado"
     });
+
     setModalOpen(true);
   };
 
@@ -117,8 +174,22 @@ const Agendamentos = () => {
 
     setForm({
       paciente_id: event.paciente_id,
-      medico_id: event.medico_id,
+      profissional_id: event.profissional_id,
       status: event.status
+    });
+
+    setModalOpen(true);
+  };
+
+  // 📅 CLICK NO CALENDÁRIO
+  const handleSelectSlot = ({ start }) => {
+    setEditingEvent(null);
+    setSelectedDate(start);
+
+    setForm({
+      paciente_id: "",
+      profissional_id: "",
+      status: "agendado"
     });
 
     setModalOpen(true);
@@ -126,46 +197,48 @@ const Agendamentos = () => {
 
   // 💾 SALVAR
   const handleSave = async () => {
-    if (!form.paciente_id || !form.medico_id) {
-      toast.warning("Preencha tudo");
-      return;
+    if (!form.paciente_id || !form.profissional_id) {
+      return toast.warning("Preencha tudo");
     }
 
-    if (isSlotOccupied(selectedDate, form.medico_id) && !editingEvent) {
-      toast.warning("Médico já tem consulta nesse horário");
-      return;
+    if (isSlotOccupied(selectedDate, form.profissional_id) && !editingEvent) {
+      return toast.warning("Horário ocupado");
     }
+
+    const data = moment(selectedDate).format("YYYY-MM-DD");
+    const hora = moment(selectedDate).format("HH:mm:ss");
 
     try {
       if (editingEvent) {
         await updateAgendamento(editingEvent.id, {
           ...form,
-          data: selectedDate
+          data,
+          hora
         });
-
         toast.success("Atualizado!");
       } else {
         await createAgendamento({
           ...form,
-          data: selectedDate
+          data,
+          hora
         });
-
         toast.success("Criado!");
       }
 
       setModalOpen(false);
       fetchData();
 
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Erro ao salvar");
     }
   };
 
-  // 🗑️ EXCLUIR
+  // 🗑️ DELETE
   const handleDelete = async () => {
     if (!editingEvent) return;
 
-    if (!window.confirm("Excluir?")) return;
+    if (!window.confirm("Excluir agendamento?")) return;
 
     await deleteAgendamento(editingEvent.id);
     toast.success("Excluído!");
@@ -175,40 +248,25 @@ const Agendamentos = () => {
 
   // 🎨 CORES
   const eventStyleGetter = (event) => {
-    let color = "#999";
-
-    if (event.status === "agendado") color = "#16a34a";
-    if (event.status === "cancelado") color = "#dc2626";
-    if (event.status === "concluido") color = "#2563eb";
+    const colors = {
+      agendado: "#16a34a",
+      cancelado: "#dc2626",
+      concluido: "#2563eb"
+    };
 
     return {
       style: {
-        backgroundColor: color,
+        backgroundColor: colors[event.status] || "#999",
         borderRadius: "8px",
-        color: "white",
-        border: "none",
-        padding: "5px"
+        color: "#fff",
+        border: "none"
       }
     };
   };
 
-  // 🧲 DRAG & DROP
-  const moveEvent = async ({ event, start }) => {
-    if (isSlotOccupied(start, event.medico_id)) {
-      toast.warning("Horário ocupado");
-      return;
-    }
-
-    await updateAgendamento(event.id, {
-      paciente_id: event.paciente_id,
-      medico_id: event.medico_id,
-      data: start,
-      status: event.status
-    });
-
-    toast.success("Reagendado!");
-    fetchData();
-  };
+  if (loading) {
+    return <h2 style={{ padding: 20 }}>Carregando agenda...</h2>;
+  }
 
   return (
     <div className="layout">
@@ -217,7 +275,27 @@ const Agendamentos = () => {
       <div style={{ height: "90vh", padding: "20px" }}>
         <h1>Agenda Médica</h1>
 
-        {/* 🔍 FILTROS */}
+        {/* BOTÃO */}
+        <button
+          onClick={abrirNovoAgendamento}
+          style={{
+            background: "#2563eb",
+            color: "#fff",
+            padding: "10px 15px",
+            border: "none",
+            borderRadius: "8px",
+            marginBottom: "10px",
+            cursor: "pointer"
+          }}
+        >
+          + Novo Agendamento
+        </button>
+
+        <p style={{ fontSize: "14px", color: "#666" }}>
+          Clique no calendário ou use o botão para agendar
+        </p>
+
+        {/* FILTROS */}
         <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
           <select onChange={(e) => setFiltroPaciente(e.target.value)}>
             <option value="">Todos pacientes</option>
@@ -245,9 +323,6 @@ const Agendamentos = () => {
           resizable
           eventPropGetter={eventStyleGetter}
           defaultView="week"
-          views={["day", "week", "agenda"]}
-          step={30}
-          timeslots={2}
         />
 
         {/* MODAL */}
@@ -267,9 +342,9 @@ const Agendamentos = () => {
           </select>
 
           <select
-            value={form.medico_id}
+            value={form.profissional_id}
             onChange={(e) =>
-              setForm({ ...form, medico_id: e.target.value })
+              setForm({ ...form, profissional_id: e.target.value })
             }
           >
             <option value="">Médico</option>
