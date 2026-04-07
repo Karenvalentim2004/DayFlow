@@ -1,34 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-:root {
-    --primary: #4F46E5;
-    --secondary: #6366F1;
-    --bg-light: #F9FAFB;
-    --card-light: #FFFFFF;
-    --text-primary: #0F172A;
-    --text-secondary: #64748B;
-    --text-dark: #E5E7EB;
-    --branco: #fff;
-
-    /* Transição */
-    --tran-03: all 0.2s ease;
-    --tran-03: all 0.3s ease;
-    --tran-04: all 0.4s ease;
-    --tran-05: all 0.5s ease;
+.dashboard {
+  padding: 25px;
+  width: 100%;
 }
 
-* {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.title {
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(90deg, #e2e2e2, #c9d6ff);
-    padding: 10px;
+/* GRID */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: center;
+  align-items: center;
+}
+
+/* CARD */
+.card {
+  padding: 20px;
+  border-radius: 14px;
+  color: white;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  opacity: 0.95;
+}
+
+.card p {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* CORES */
+.total {
+  background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
+}
+
+.green {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.red {
+  background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+}
+
+.blue {
+  background: linear-gradient(135deg, #3498db, #5dade2);
+}
+
+/* CHART */
+.chart {
+  margin-top: 30px;
+  background: #1e1e2f;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+}
+
+/* SKELETON */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #2c2c3c 25%, #3a3a4d 50%, #2c2c3c 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+.skeleton.card {
+  height: 100px;
+}
+
+.skeleton.chart {
+  height: 300px;
+  grid-column: span 2;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
